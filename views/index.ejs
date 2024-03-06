@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="shortcut icon" type="image/png" href="images/logos/opa-nul-just-logo.png">
+  <link rel="manifest" href="/manifest.json">
+  <title>Abyss Hunters - <%= msg.signup %>/<%= msg.login %></title>
+</head>
+<body>
+  <header>
+    <h1>Abyss Hunters</h1>
+  </header>
+  <main>
+    <!-- Sign up -->
+    <section class="section" id="signup">
+      <div class="center">
+        <button onclick="inverse()"><%= msg.login %></button>
+      </div>
+      <form class="sign center" action="/signup" method="post">
+        <h2><%= msg.signup %></h2>
+        <div>
+          <div>
+            <% if (msg.signup_error) { %>
+              <p class="red"><%= msg.signup_error %></p>
+            <% } %>
+            <input type="email" id="signEmail" name="signEmail" placeholder="<%= msg.email %>" required>
+            <br><br>
+            <input type="text" id="signUsername" name="signUsername" placeholder="<%= msg.username %>" minlength="3" maxlength="20" required>
+            <br><br>
+            <input type="password" id="signPassword" name="signPassword" placeholder="<%= msg.password %>" minlength="6" required>
+            <br><br>
+            <input type="password" id="signConfirmPassword" name="signConfirmPassword" placeholder="<%= msg.confirm_password %>" minlength="6" required>
+            <br><br>
+            <select id="signColor" name="signColor" required>
+              <option value="" disabled selected>Choisissez une couleur pour le pseudo</option>
+              <option value="#000000">Noir</option>
+              <option value="#808080">Gris</option>
+              <option value="#ffffff">Blanc</option>
+              <option value="#ff0000">Rouge</option>
+              <option value="#00ff00">Vert</option>
+              <option value="#0000ff">Bleu</option>
+              <option value="#ffff00">Jaune</option>
+              <option value="#00ffff">Cyan</option>
+              <option value="#ff00ff">Magenta</option>
+              <option value="#964b00">Marron</option>
+              <option value="#ffa500">Orange</option>
+              <option value="#800080">Violet</option>
+              <option value="#40e0d0">Turquoise</option>
+              <option value="#9370db">Mauve</option>
+              <option value="#800020">Bordeaux</option>
+            </select> 
+            <br><br>
+            <button type="submit"><%= msg.signup %></button>
+          </div>
+        </div>
+      </form>
+    </section>
+    <!-- Login -->
+    <section class="section" id="login" style="display:none;">
+      <div class="center">
+        <button onclick="inverse()"><%= msg.signup %></button>
+      </div>
+      <form class="sign center" action="/login" method="post">
+        <h2><%= msg.login %></h2>
+        <div>
+          <div>
+            <% if (msg.login_error) { %>
+              <p class="red"><%= msg.login_error %></p>
+            <% } %>
+            <input type="email" id="logEmail" name="logEmail" placeholder="<%= msg.email %>" required>
+            <br><br>
+            <input type="password" id="logPassword" name="logPassword" placeholder="<%= msg.password %>" required>
+            <br><br>
+            <button type="submit"><%= msg.login %></button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script>
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/service-worker.js')
+        .then(function() {
+          console.log("Service Worker Registered");
+        });
+    }
+    self.addEventListener('fetch', event => {
+      event.respondWith(
+        caches.match(event.request).then(response => {
+          return response || fetch(event.request);
+        })
+      );
+    });
+  </script>
+  <script src="scripts/script.js"></script>
+</body>
+</html>

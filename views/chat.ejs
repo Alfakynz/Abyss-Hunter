@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <title>Abyss Hunters - chat</title>
+</head>
+<body>
+  <header class="header">
+    <div>
+      <a href="/welcome">
+        <svg xmlns="http://www.w3.org/2000/svg" id="Isolation_Mode" data-name="Isolation Mode" viewBox="0 0 24 24" width="512" height="512">
+          <path d="M16.041,24,6.534,14.48a3.507,3.507,0,0,1,0-4.948L16.052,0,18.17,2.121,8.652,11.652a.5.5,0,0,0,0,.707l9.506,9.52Z"/>
+        </svg>
+      </a>
+    </div>
+    <div>
+      <h1>Chat Online</h1>
+      <h3>
+        <span id="connectedUsers">0</span>
+        <span id="connectedUsersMsg"><%= msg.user_connected %></span>
+      </h3>
+    </div>
+    <div>
+      <svg id="Layer_1" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1">
+        <path d="m7.5 13a4.5 4.5 0 1 1 4.5-4.5 4.505 4.505 0 0 1 -4.5 4.5zm0-7a2.5 2.5 0 1 0 2.5 2.5 2.5 2.5 0 0 0 -2.5-2.5zm7.5 17v-.5a7.5 7.5 0 0 0 -15 0v.5a1 1 0 0 0 2 0v-.5a5.5 5.5 0 0 1 11 0v.5a1 1 0 0 0 2 0zm9-5a7 7 0 0 0 -11.667-5.217 1 1 0 1 0 1.334 1.49 5 5 0 0 1 8.333 3.727 1 1 0 0 0 2 0zm-6.5-9a4.5 4.5 0 1 1 4.5-4.5 4.505 4.505 0 0 1 -4.5 4.5zm0-7a2.5 2.5 0 1 0 2.5 2.5 2.5 2.5 0 0 0 -2.5-2.5z"/>
+      </svg>
+    </div>
+  </header>
+  <ul id="messages"></ul>
+  <form id="form" action="">
+    <input id="inputMsg" placeholder="<%= msg.message %>" autocomplete="off" maxlength="500" />
+    <button class="send" title="<%= msg.send %>">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="512" height="512">
+          <g id="_01_align_center" data-name="01 align center">
+            <path d="M1.444,6.669a2,2,0,0,0-.865,3.337l3.412,3.408V20h6.593l3.435,3.43a1.987,1.987,0,0,0,1.408.588,2.034,2.034,0,0,0,.51-.066,1.978,1.978,0,0,0,1.42-1.379L23.991.021ZM2,8.592l17.028-5.02L5.993,16.586v-4Zm13.44,13.424L11.413,18h-4L20.446,4.978Z"/>
+          </g>
+        </svg>
+      </div>
+    </button>
+  </form>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    const socket = io();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      socket.emit('page', 'chat');
+    });
+
+    socket.on('chat message', (data) => {
+      $('#messages').append($('<li>').html(data));
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    socket.on("connectedUsers", (users) => {
+      if (users > 1) {
+        document.getElementById('connectedUsers').textContent = users;
+        document.getElementById('connectedUsersMsg').textContent = '<%= msg.users_connected %>'
+      } else {
+        document.getElementById('connectedUsers').textContent = users;
+        document.getElementById('connectedUsersMsg').textContent = '<%= msg.user_connected %>'
+      }
+    });
+
+    $('form').submit(() => {
+      const message = $('#inputMsg').val();
+      socket.emit('chat message', message, '<%= user.username %>', '<%= user.color %>');
+      $('#inputMsg').val('');
+      return false;
+    });
+
+    window.addEventListener('beforeunload', () => {
+      isDisconnected = true;
+      socket.emit('disconnection');
+    });
+
+    window.addEventListener('unload', () => {
+      if (!isDisconnected) {
+        socket.emit('disconnection');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="shortcut icon" type="image/png" href="images/logos/opa-nul-just-logo.png">
+  <title>Abyss Hunters - Home</title>
+</head>
+<body>
+  <header class="center">
+    <h1>Home</h1>
+  </header>
+  <main>
+    <section class="section center">
+      <h2><%= msg.info %></h2>
+      <p>
+        <%= msg.username %> : <%= user.username %>
+        <br>
+        <%= msg.email %> : <%= user.email %>
+        <br>
+        Color : <span style="color:<%= user.color %>;"><%= user.color %></span>
+      </p>
+    </section>
+    <section class="section center">
+      <h3>Chat Online</h3>
+      <p><a href="/chat">Chat online</a></p>
+      <p>
+        <span id="connectedUsers">0</span>
+        <span id="connectedUsersMsg"><%= msg.user_connected %></span>
+      </p>
+    </section>
+    <section class="section center">
+      <h3><%= msg.search_user %></h3>
+      <input id="searchInput" placeholder="<%= msg.search_user %>" required>
+      <div id="searchResults"></div>
+    </section>
+    <section class="section center">
+      <h3><%= msg.friends %></h3>
+      <% if (user.friends.length !== 0) { %>
+        <% for (let i = 0; i < user.friends.length; i++) { %>
+          <div class="user-list">
+            <div>
+              <%= user.friends[i] %>
+            </div>
+            <div>
+              <form action="/removeFriend/<%= user.friends[i] %>" method="POST">
+                <button type="submit"><%= msg.remove_friend %></button>
+              </form>
+            </div>
+          </div>
+        <% } %>
+      <% } else { %>
+        <p><%= msg.no_friends %></p>
+      <% } %>
+    </section>
+    <section class="section inline">
+      <form action="disconnect" method="post">
+        <button type="submit"><%= msg.disconnect %></button>
+      </form>
+      <form action="deleteAccount" method="post">
+        <button type="submit"><%= msg.delete_account %></button>
+      </form>
+    </section>
+  </main>
+  <script>
+    const users = <%- JSON.stringify(users) %>;
+    const actualUser = <%- JSON.stringify(user) %>;
+    const searchResults = document.getElementById('searchResults');
+    function search(event) {
+      event.preventDefault();
+      searchResults.innerHTML = "";
+      const userSearched = document.getElementById('searchInput').value.trim();
+
+      if (userSearched === "@all") {
+        const usersFound = users;
+        usersFound.forEach(user => {
+          if (user.username !== "<%= user.username %>") {
+            const addOrRemove = actualUser.friends.includes(user.username) ? "remove" : "add";
+            const msgAddOrRemove = actualUser.friends.includes(user.username) ? "<%= msg.remove_friend %>" : "<%= msg.add_friend %>";
+            const div = document.createElement('div');
+            div.classList.add('user-list');
+            const userDiv = document.createElement('div');
+            userDiv.textContent = user.username;
+            const formDiv = document.createElement('div');
+            const form = document.createElement('form');
+            form.action = `/${addOrRemove}Friend/${user.username}`;
+            form.method = 'POST';
+            const button = document.createElement('button');
+            button.type = 'submit';
+            button.textContent = msgAddOrRemove;
+            form.appendChild(button);
+            formDiv.appendChild(form);
+            div.appendChild(userDiv);
+            div.appendChild(formDiv);
+            searchResults.appendChild(div);
+          }
+        });
+      }
+      else if (userSearched !== "") {
+        var usersFound = users.filter(user => user.username.toLowerCase().includes(userSearched.toLowerCase()));
+        usersFound.sort((a, b) => {
+          if (a.username.toLowerCase() === userSearched.toLowerCase()) return -1;
+          if (b.username.toLowerCase() === userSearched.toLowerCase()) return 1;
+          return a.username.toLowerCase().localeCompare(userSearched.toLowerCase());
+        });
+
+        if (usersFound.length === 0) {
+          searchResults.innerHTML = '<p><%= msg.user_not_found %></p>';
+        }
+        else {
+          usersFound.forEach(user => {
+            if (user.username !== "<%= user.username %>") {
+              const addOrRemove = actualUser.friends.includes(user.username) ? "remove" : "add";
+              const msgAddOrRemove = actualUser.friends.includes(user.username) ? "<%= msg.remove_friend %>" : "<%= msg.add_friend %>";
+              const div = document.createElement('div');
+              div.classList.add('user-list');
+              const userDiv = document.createElement('div');
+              userDiv.textContent = user.username;
+              const formDiv = document.createElement('div');
+              const form = document.createElement('form');
+              form.action = `/${addOrRemove}Friend/${user.username}`;
+              form.method = 'POST';
+              const button = document.createElement('button');
+              button.type = 'submit';
+              button.textContent = msgAddOrRemove;
+              form.appendChild(button);
+              formDiv.appendChild(form);
+              div.appendChild(userDiv);
+              div.appendChild(formDiv);
+              searchResults.appendChild(div);
+            }
+          });
+        }
+      } else {
+        searchResults.innerHTML = "";
+      }
+    }
+    document.getElementById('searchInput').addEventListener('input', search);
+  </script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    const socket = io();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      socket.emit('page', 'welcome');
+    });
+
+    socket.on('connectedUsers', (users) => {
+      if (users > 1) {
+        document.getElementById('connectedUsers').textContent = users;
+        document.getElementById('connectedUsersMsg').textContent = '<%= msg.users_connected %>'
+      } else {
+        document.getElementById('connectedUsers').textContent = users;
+        document.getElementById('connectedUsersMsg').textContent = '<%= msg.user_connected %>'
+      }
+    });
+  </script>
+</body>
+</html>

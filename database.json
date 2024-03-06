@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "email": "test@test.test",
+      "username": "test",
+      "password": "$2b$10$MePoUHmfIco7wjSPDQInDe.rzFIcSaVcsLNMAia86JrhQ//.ykGZ.",
+      "color": "#00ffff",
+      "friends": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "email": "a@a.a",
+      "username": "a",
+      "password": "$2b$10$AzzqNEiIvl8kJQ4F0T9ru.Musps6JQCcLFPgIR0dv.CD67kFhajbm",
+      "color": "#ff00ff",
+      "friends": []
+    },
+    {
+      "email": "b@b.b",
+      "username": "b",
+      "password": "$2b$10$Oe9kmO9nsRdPrpAqxJydUuz.2wl45WHONZzQXTM2g/uzBY.6lCYqa",
+      "color": "#ffff00",
+      "friends": []
+    }
+  ]
+}
