@@ -80,21 +80,18 @@
       </form>
     </section>
   </main>
+  </script>
   <script>
     if('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('/service-worker.js')
-        .then(function() {
-          console.log("Service Worker Registered");
-        });
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(function(registration) {
+            console.log('Service Worker registered with scope:', registration.scope);
+          }, function(err) {
+            console.error('Service Worker registration failed:', err);
+          });
+      });
     }
-    self.addEventListener('fetch', event => {
-      event.respondWith(
-        caches.match(event.request).then(response => {
-          return response || fetch(event.request);
-        })
-      );
-    });
   </script>
   <script src="scripts/script.js"></script>
 </body>
