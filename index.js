@@ -149,7 +149,8 @@ app.get('/welcome', (req, res) => {
           search_user: res.__('search_user'),
           user_not_found: res.__('user_not_found'),
           user_connected: res.__('user_connected'),
-          users_connected: res.__('users_connected')
+          users_connected: res.__('users_connected'),
+          home: res.__('home')
         },
         user: {
           username: req.session.username,
@@ -185,11 +186,7 @@ app.get('/chat', (req, res) => {
     res.redirect('/');
   }
 });
-/*
-app.get('/connectedUsers', (req, res) => {
-  res.send(`Nombre de personnes connectées : ${connectedUsers}`);
-});
-*/
+
 app.post('/signup', (req, res) => {
   const email = req.body.signEmail;
   const username = req.body.signUsername;
@@ -350,7 +347,7 @@ app.post('/login', (req, res) => {
               email: res.__('email'),
               confirm_password: res.__('confirm_password'),
               signup_error: false,
-              login_Error: res.__('bad_email_or_password')
+              login_error: res.__('bad_email_or_password')
             }
           });
         }

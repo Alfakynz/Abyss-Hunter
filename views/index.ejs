@@ -69,6 +69,11 @@
           <div>
             <% if (msg.login_error) { %>
               <p class="red"><%= msg.login_error %></p>
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  inverse();
+                });
+              </script>
             <% } %>
             <input type="email" id="logEmail" name="logEmail" placeholder="<%= msg.email %>" required>
             <br><br>

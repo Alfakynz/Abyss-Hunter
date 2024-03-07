@@ -10,6 +10,7 @@
   "email": "Email",
   "email_use": "Email ya fue usado",
   "friends": "Amigos",
+  "home": "Inicio",
   "info": "Información del jugador",
   "login": "Connectarse",
   "message": "Mensaje",
@@ -19,7 +20,7 @@
   "password_short": "La contraseña debe tener al menos 6 caracteres",
   "players": "Jugadores",
   "remove_friend": "Remover amigo",
-  "return_welcome": "Volver a la página inicial"
+  "return_welcome": "Volver a la página inicial",
   "search_user": "Buscar usuario",
   "send": "Enviar",
   "signup": "Inscribirse",

@@ -10,6 +10,7 @@
 	"email": "Email",
 	"email_use": "Email already used",
 	"friends": "Friends",
+  "home": "Home",
 	"info": "Player's information",
 	"login": "Login",
 	"message": "Message",
@@ -31,6 +32,5 @@
   "user_connected": "user connected",
 	"user_exist": "Username already exists",
 	"user_not_found": "User not found",
-	"welcome": "Welcome",
-	"return_wecome": "return_wecome"
+	"welcome": "Welcome"
 }

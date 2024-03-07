@@ -1,6 +1,6 @@
 {
 	"404": "Erreur 404 : Page non trouvée",
-  "access_to_chat": "Accèder au tchat",
+  "access_to_chat": "Accéder au tchat",
 	"add_friend": "Ajouter aux amis",
 	"bad_email_or_password": "Email ou mot de passe incorrect",
 	"color_not_defined": "Couleur non définie",
@@ -10,6 +10,7 @@
 	"email": "Email",
 	"email_use": "Email déjà utilisé",
 	"friends": "Amis",
+  "home": "Accueil",
 	"info": "Information du joueur",
 	"login": "Se connecter",
 	"message": "Message",
@@ -31,6 +32,5 @@
   "user_connected": "utilisateur connecté",
 	"user_exist": "Cet utilisateur existe déjà",
 	"user_not_found": "Aucun joueur trouvé",
-	"welcome": "Bienvenue",
-	"return_wecome": "return_wecome"
+	"welcome": "Bienvenue"
 }
