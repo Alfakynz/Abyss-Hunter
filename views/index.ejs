@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#000000">
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <link rel="shortcut icon" type="image/png" href="images/logos/opa-nul-just-logo.png">
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="manifest.json">
   <title>Abyss Hunters - <%= msg.signup %>/<%= msg.login %></title>
 </head>
 <body>
@@ -85,18 +85,20 @@
       </form>
     </section>
   </main>
-  </script>
   <script>
-    if('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('service-worker.js')
           .then(function(registration) {
-            console.log('Service Worker registered with scope:', registration.scope);
-          }, function(err) {
-            console.error('Service Worker registration failed:', err);
+            console.log('Service Worker enregistré avec succès:', registration);
+          })
+          .catch(function(error) {
+            console.error("Erreur lors de l'enregistrement du Service Worker:", error);
           });
-      });
-    }
+      } else {
+        console.error('Les Service Workers ne sont pas pris en charge dans ce navigateur.');
+      }
+    });
   </script>
   <script src="scripts/script.js"></script>
 </body>

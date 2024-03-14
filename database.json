@@ -3,7 +3,7 @@
     {
       "email": "test@test.test",
       "username": "test",
-      "password": "$2b$10$F3t/jmixjQNiW.dBZlIORuj8sZOXydXbLdbMPfEsG9LRajn/AOliK",
+      "password": "$2b$10$SQ6kwKAKecwNMtRl5j/mTe3vF9oru9BBbEgRhsznlzPdradWA.0YC",
       "color": "#00ffff",
       "friends": [
         "a",
@@ -13,14 +13,14 @@
     {
       "email": "a@a.a",
       "username": "a",
-      "password": "$2b$10$4QOaR4AQtGcv6g.zN6QGhe8UoJEWlhQAgA2EUhVxb5NiIg003/WNq",
+      "password": "$2b$10$qUIkOCkSrDUcnjPGgCnx8ejvO/hRx/rxvFPQn6KZ8wYeuci7gHM1.",
       "color": "#ff00ff",
       "friends": []
     },
     {
       "email": "b@b.b",
       "username": "b",
-      "password": "$2b$10$coiuFjjrMJWEaqCFJe9IlOMiKUF/qwZcF6NDAyBzHhhgph.BJ1tZm",
+      "password": "$2b$10$Ifh/Mnyp2hzRhgyJJGGtPeYtEt8md9HcTaO6m/AXdGrGDfaYFlxxG",
       "color": "#ffff00",
       "friends": []
     }

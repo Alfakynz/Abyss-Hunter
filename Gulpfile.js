@@ -1,12 +1,15 @@
 'use strict';
-// Include Gulp & Tools We'll Use
+
 var gulp = require('gulp');
+var path = require('path');
+var swPrecache = require('sw-precache');
+
 gulp.task('generate-service-worker', function(callback) {
-  var path = require('path');
-  var swPrecache = require('sw-precache');
-  var rootDir = 'public';
+  var rootDir = 'views';
   swPrecache.write(path.join(rootDir, 'sw.js'), {
-    staticFileGlobs: [rootDir + '/**/*.{js,html,css,png,jpg,gif}'],
+    staticFileGlobs: [
+      rootDir + '/**/*.{js,html,css,scss,png,jpg,gif,ejs}',
+    ],
     stripPrefix: rootDir,
     navigateFallback: '/',
     runtimeCaching: [{
@@ -14,5 +17,13 @@ gulp.task('generate-service-worker', function(callback) {
       handler: 'cacheFirst'
     }],
     verbose: true
-  }, callback);
+  }, function(error) {
+    if (error) {
+      console.error('Erreur lors de la génération du Service Worker:', error);
+    } else {
+      console.log('Service Worker généré avec succès.');
+    }
+    callback(error);
+  });
 });
+
