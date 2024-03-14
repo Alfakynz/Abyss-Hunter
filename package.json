@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile:sass": "node-sass --watch views/css/styles.scss views/css/styles.css"
   },
   "keywords": [],
   "author": "",
@@ -18,12 +19,15 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "fs": "^0.0.1-security",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "http": "^0.0.1-security",
     "i18n": "^0.15.1",
     "jsdom": "^23.0.0",
     "node-fetch": "^3.2.6",
     "socket.io": "^4.7.2",
     "sw-precache": "^3.2.0"
+  },
+  "devDependencies": {
+    "node-sass": "^9.0.0"
   }
 }
